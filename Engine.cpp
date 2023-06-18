@@ -115,7 +115,6 @@ void replyComment(unsigned id, System& s)
 {
 	std::cout << "Enter reply: ";
 	char reply[1024];
-	std::cin.ignore();
 	std::cin.getline(reply, 1024);
 
 	if (s.replyToComment(reply, id))
