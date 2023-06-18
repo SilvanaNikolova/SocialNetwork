@@ -247,7 +247,6 @@ void run()
 			if (isDigit(secondArg))
 			{
 				unsigned id = convertToDigit(secondArg);
-
 				openPostWithId(id, s);
 			}
 			else
@@ -261,21 +260,36 @@ void run()
 			comments(s);
 		else if (strcmp(firstArg, "reply") == 0)
 		{
-			std::cin >> idArg;
+			std::cin >> secondArg;
 
-			replyComment(idArg, s);
+			if (!isDigit(secondArg))
+				std::cout << "Commentd id must be a digit! Please choose a valid command!";
+			else {
+				idArg = convertToDigit(secondArg);
+				replyComment(idArg, s);
+			}
 		}
 		else if (strcmp(firstArg, "upvote") == 0)
 		{
-			std::cin >> idArg;
+			std::cin >> secondArg;
 
-			upvoteComment(idArg, s);
+			if (!isDigit(secondArg))
+				std::cout << "Commentd id must be a digit! Please choose a valid command!";
+			else {
+				idArg = convertToDigit(secondArg);
+				upvoteComment(idArg, s);
+			}
 		}
 		else if (strcmp(firstArg, "downvote") == 0)
 		{
-			std::cin >> idArg;
+			std::cin >> secondArg;
 
-			downvoteComment(idArg, s);
+			if (!isDigit(secondArg))
+				std::cout << "Commentd id must be a digit! Please choose a valid command!";
+			else {
+				idArg = convertToDigit(secondArg);
+				downvoteComment(idArg, s);
+			}
 		}
 		else if (strcmp(firstArg, "p_close") == 0)
 			p_close(s);
@@ -302,4 +316,4 @@ void run()
 		std::cout << "-----------------------------";
 		std::cout << std::endl;
 	}
-}
+};
