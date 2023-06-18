@@ -260,6 +260,7 @@ void run()
 			comments(s);
 		else if (strcmp(firstArg, "reply") == 0)
 		{
+			std::cin.ignore();
 			std::cin >> secondArg;
 
 			if (!isDigit(secondArg))
@@ -271,6 +272,7 @@ void run()
 		}
 		else if (strcmp(firstArg, "upvote") == 0)
 		{
+			std::cin.ignore();
 			std::cin >> secondArg;
 
 			if (!isDigit(secondArg))
@@ -282,6 +284,7 @@ void run()
 		}
 		else if (strcmp(firstArg, "downvote") == 0)
 		{
+			std::cin.ignore();
 			std::cin >> secondArg;
 
 			if (!isDigit(secondArg))
@@ -304,9 +307,15 @@ void run()
 			whoami(s);
 		else if (strcmp(firstArg, "about") == 0)
 		{
-			std::cin >> idArg;
+			std::cin.ignore();
+			std::cin >> secondArg;
 
-			about(idArg, s);
+			if (!isDigit(secondArg))
+				std::cout << "Commentd id must be a digit! Please choose a valid command!";
+			else {
+				idArg = convertToDigit(secondArg);
+				about(idArg, s);
+			}
 		}
 		else {
 			std::cout << "Invalid command! Choose between these valid commands!" << std::endl;
