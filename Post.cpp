@@ -103,7 +103,6 @@ void Post::upvote(unsigned commentId, bool isRated)
 		if (_comments[i].getId() == commentId && isRated == true)
 		{
 			rating < 0 ? _comments[i].rate(1) : _comments[i].rate(-1);
-			//_comments[i].rate(-1);
 			exists = true;
 		}
 		else if (_comments[i].getId() == commentId && isRated == false)
@@ -135,7 +134,6 @@ void Post::downvote(unsigned commentId, bool isRated)
 		if (_comments[i].getId() == commentId && isRated == true)
 		{
 			rating <= 0 ? _comments[i].rate(1) : _comments[i].rate(-1);
-			//_comments[i].rate(1);
 			exists = true;
 		}
 		else if (_comments[i].getId() == commentId && isRated == false)
@@ -160,30 +158,24 @@ std::ostream& operator<<(std::ostream& os, const Post& p)
 	os << commentsSize << '\n';
 
 	for (size_t i = 0; i < commentsSize; i++)
-		os << p._comments[i]; //removed '/n'
+		os << p._comments[i];
 
 	return os;
 }
 
 std::istream& operator>>(std::istream& is, Post& p)
 {
-	//is.ignore();
-
 	is >> p._title >> p._description >> p._postId;
 
 	size_t commentsSize;
-
 	is >> commentsSize;
-
-	//if (commentsSize != 0)
-		is.ignore();
+	is.ignore();
 
 	for (size_t i = 0; i < commentsSize; i++)
 	{
 		Comment c(commentsSize);
 		is >> c;
 		p._comments.pushBack(std::move(c));
-		//is >> p._comments[i];
 	}
 
 	return is;

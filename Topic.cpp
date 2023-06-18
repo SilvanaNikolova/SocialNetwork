@@ -18,7 +18,7 @@ Topic::Topic(const MyString& title, const MyString& creatorName, const MyString&
 
 bool Topic::isTopic(const MyString& title)
 {
-	return _title == title;//&& _creatorName == creatorName && _description == description;
+	return _title == title;
 }
 
 const MyString& Topic::getName() const
@@ -114,14 +114,12 @@ std::istream& operator>>(std::istream& is, Topic& t)
 	size_t postsSize;
 
 	is >> postsSize;
-
-	//if (postsSize != 0)
 		is.ignore();
 
 	for (size_t i = 0; i < postsSize; i++)
 	{
 		Post p(postsSize);
-		is >> p; //t._posts[i];
+		is >> p;
 		t._posts.pushBack(std::move(p));
 	}
 

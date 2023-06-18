@@ -6,8 +6,6 @@
 
 class User
 {
-	//friend class System;
-	//Vector<Topic> _topics;
 	Vector<Pair<unsigned, bool>> _commentRatings;
 	MyString _firstName;
 	MyString _lastName;

@@ -37,7 +37,7 @@ public:
 	void openPost(unsigned);
 
 	bool commentPost(const MyString&) const;
-	void listComments() const;//
+	void listComments() const;
 	bool replyToComment(const MyString&, unsigned);
 	void downvoteComment(unsigned);
 	void upvoteComment(unsigned);
@@ -55,7 +55,4 @@ public:
 
 	void saveUsersToFile() const;
 	void saveTopicsToFile() const;
-
-	void saveUserToFile(const User&) const;
-	void saveTopicToFile(const Topic&) const;
 };

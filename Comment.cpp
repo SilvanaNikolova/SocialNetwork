@@ -58,7 +58,7 @@ std::ostream& operator<<(std::ostream& os, const Comment& c)
 	os << repliesSize << '\n';
 
 	for (size_t i = 0; i < repliesSize; i++)
-		os << c._replies[i] << '\n'; // removed '\n'
+		os << c._replies[i] << '\n';
 
 	return os;
 }
@@ -77,7 +77,6 @@ std::istream& operator>>(std::istream& is, Comment& c)
 		MyString reply;
 		is >> reply;
 		c._replies.pushBack(std::move(reply));
-		//is >> c._replies[i];
 	}
 
 	return is;

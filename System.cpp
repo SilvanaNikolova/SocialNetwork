@@ -8,6 +8,12 @@ System::System()
 
 bool System::signin(const MyString& firstName, const MyString& lastName, const MyString& password)
 {
+	if (_currentUser)
+	{
+		std::cout << "You should logout before trying to signin!";
+		return false;
+	}
+
 	size_t size = _users.getSize();
 
 	for (size_t i = 0; i < size; i++)
@@ -26,6 +32,12 @@ bool System::signin(const MyString& firstName, const MyString& lastName, const M
 
 bool System::login(const MyString& firstName, const MyString& password)
 {
+	if (_currentUser)
+	{
+		std::cout << "You are already logged in!";
+		return false;
+	}
+
 	size_t count = _users.getSize();
 
 	for (size_t i = 0; i < count; i++)
@@ -48,15 +60,25 @@ void System::searchTopic(const MyString& topicName) const
 
 	if (size == 0)
 	{
-		std::cout << "There are no topics with title: " << topicName << "!";
+		std::cout << "There are no topics!";
 		return;
 	}
 
+	bool exists = false;
 	for (size_t i = 0; i < size; i++)
 	{
 		if (_topics[i].getName().contains(topicName))
+		{
 			std::cout << "-" << _topics[i].getName() <<
-			" {Id:" << _topics[i].getId() << "}" << std::endl;
+				" {Id:" << _topics[i].getId() << "}" << std::endl;
+			exists = true;
+		}
+	}
+
+	if (!exists)
+	{
+		std::cout << "There are no topics with title: \"" << topicName << "\"!";
+		return;
 	}
 }
 
@@ -74,7 +96,7 @@ bool System::createTopic(const MyString& title, const MyString& description)
 	{
 		if (_topics[i].isTopic(title))
 		{
-			std::cout << "There is already topic with title: " << title << "!";
+			std::cout << "There is already topic with title: \"" << title << "\"!";
 			return false;
 		}
 	}
@@ -98,11 +120,11 @@ void System::openTopic(const MyString& topicName)
 
 	if (!_currentTopic)
 	{
-		std::cout << "There is no topic with title: " << topicName << "!";
+		std::cout << "There is no topic with title: \"" << topicName << "\"!";
 		return;
 	}
 
-	std::cout << "Welcome to \"" << _currentTopic->getName() << "\"!" << std::endl;
+	std::cout << "Welcome to \"" << _currentTopic->getName() << "\"!";
 }
 
 void System::openTopic(unsigned topicId)
@@ -123,7 +145,7 @@ void System::openTopic(unsigned topicId)
 		return;
 	}
 
-	std::cout << "Welcome to \"" << _currentTopic->getName() << "\"!" << std::endl;
+	std::cout << "Welcome to \"" << _currentTopic->getName() << "\"!";
 }
 
 void System::listTopic() const
@@ -161,11 +183,11 @@ void System::openPost(const MyString& postName)
 
 	if (!_currentPost)
 	{
-		std::cout << "There is no posts with title: " << postName << "!";
+		std::cout << "There is no posts with title: \"" << postName << "\"!";
 		return;
 	}
 
-	std::cout << "Q: " << _currentPost->getDescription() << std::endl;
+	std::cout << "Q: " << _currentPost->getDescription();
 }
 
 void System::openPost(unsigned postId)
@@ -180,11 +202,11 @@ void System::openPost(unsigned postId)
 
 	if (!_currentPost)
 	{
-		std::cout << "There is no posts with id: " << postId << "!";
+		std::cout << "There is no post with id: " << postId << "!";
 		return;
 	}
 
-	std::cout << "Q: " << _currentPost->getDescription() << std::endl;
+	std::cout << "Q: " << _currentPost->getDescription();
 }
 
 bool System::commentPost(const MyString& comment) const
@@ -259,13 +281,12 @@ void System::quitPost()
 {
 	if (!_currentPost)
 	{
-		std::cout << "There is no open post rigth now!" << std::endl;
+		std::cout << "There is no open post rigth now!";
 		return;
 	}
 
-	std::cout << "You just left " << _currentPost->getName() << "!" << std::endl;
+	std::cout << "You just left \"" << _currentPost->getName() << "\"!";
 
-	//delete _currentPost; ???????
 	_currentPost = nullptr;
 }
 
@@ -273,11 +294,11 @@ void System::quitTopic()
 {
 	if (!_currentTopic)
 	{
-		std::cout << "There is no open topic rigth now!" << std::endl;
+		std::cout << "There is no open topic rigth now!";
 		return;
 	}
 
-	std::cout << "You just left topic " << _currentTopic->getName() << "!" << std::endl;
+	std::cout << "You just left topic \"" << _currentTopic->getName() << "\"!";
 
 
 	_currentTopic = nullptr;
@@ -289,7 +310,7 @@ bool System::logout()
 	if (!_currentUser)
 		return false;
 
-	std::cout << "Goodbye, " << _currentUser->getName() << "!" << std::endl;
+	std::cout << "Goodbye, " << _currentUser->getName() << "!";
 
 	_currentPost = nullptr;
 	_currentTopic = nullptr;
@@ -316,7 +337,7 @@ void System::getUserInfo() const
 	}
 	//throw std::logic_error("There is no active user rigth now!");
 
-	std::cout << _currentUser->getName() << " having " << _currentUser->getPoints() << " points!";
+	std::cout << _currentUser->getName() << ", having " << _currentUser->getPoints() << " points!";
 }
 
 void System::getTopicInfo(unsigned topicID) const
@@ -355,16 +376,6 @@ void System::readUsersFromFile()
 	if (!is.is_open())
 		throw std::runtime_error("File not open!");
 
-	//is.ignore();
-
-	//is.get();
-
-	//if (is.eof())
-	//{
-	//	is.close();
-	//	return;
-	//}
-
 	char beg[1024];
 	is.getline(beg, 1024);
 
@@ -375,11 +386,6 @@ void System::readUsersFromFile()
 	}
 
 	is.seekg(std::ios::beg);
-
-	//is.ignore('\n');
-
-	//int usersCount = 0;
-	//bool isUser;
 
 	size_t size;
 
@@ -396,41 +402,6 @@ void System::readUsersFromFile()
 	}
 
 	is.close();
-
-	//while (true)
-	//{
-	//	if (is.eof())
-	//	{
-	//		break;
-	//	}
-
-	//	User u;
-
-	//	is >> u;
-
-	//	//usersCount = _users.getSize();
-	//	//isUser = false;
-
-	//	//for (size_t i = 0; i < usersCount; i++)
-	//	//{
-	//	//	if (_users[i].isUser(u._firstName, u._lastName, u._password))
-	//	//	{
-	//	//		_users[i]._points = u._points;
-	//	//		_users[i]._commentRatings = u._commentRatings;
-	//	//		isUser = true;
-	//	//		break;
-	//	//	}
-	//	//}
-
-	//	//if (u.getName() != "")
-	//	//if (!isUser)
-	//	_users.pushBack(u);
-
-	//	is.ignore();
-	//}
-
-	//is.clear();
-	//is.close();
 }
 
 void System::readTopicsFromFile()
@@ -439,18 +410,6 @@ void System::readTopicsFromFile()
 
 	if (!is.is_open())
 		throw std::runtime_error("File not open!");
-
-	//is.ignore();
-
-	//is.get();
-
-	//if (is.eof())
-	//{
-	//	is.close();
-	//	return;
-	//}
-
-	//is.seekg(-1);
 
 	char beg[1024];
 	is.getline(beg, 1024);
@@ -473,31 +432,9 @@ void System::readTopicsFromFile()
 		Topic t(size);
 		is >> t;
 		_topics.pushBack(t);
-
-		//is.ignore();
 	}
 
 	is.close();
-
-	//while (true)
-	//{
-	//	if (is.eof())
-	//	{
-	//		break;
-	//	}
-	//	Topic t;
-
-	//	is >> t;
-
-	//	//if (t.getName() != "")
-	//	_topics.pushBack(t);
-
-	//	//is.get();
-	//	is.ignore();
-	//	//is.ignore('\n');
-	//}
-
-
 }
 
 void System::saveUsersToFile() const
@@ -513,7 +450,6 @@ void System::saveUsersToFile() const
 
 	for (size_t i = 0; i < size; i++)
 		os << _users[i];
-	//saveUserToFile(_users[i]);
 
 	os.close();
 }
@@ -531,7 +467,6 @@ void System::saveTopicsToFile() const
 
 	for (size_t i = 0; i < size; i++)
 		os << _topics[i];
-	//saveTopicToFile(_topics[i]);
 
 	os.close();
 }

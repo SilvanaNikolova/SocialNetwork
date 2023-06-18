@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "HelperFunctions.h"
 
 void signin(System& s)
 {
@@ -145,7 +146,7 @@ void quit(System& s)
 void logout(System& s)
 {
 	if (!s.logout())
-		std::cout << "There is no active user rigth now!" << std::endl;
+		std::cout << "There is no active user rigth now!";
 }
 
 void exit(System& s)
@@ -164,57 +165,28 @@ void about(unsigned id, System& s)
 	s.getTopicInfo(id);
 }
 
-bool isDigit(const MyString& str)
-{
-	unsigned i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] < 48 || str[i] > 57)
-			return false;
-
-		i++;
-	}
-
-	return true;
-}
-
-unsigned convertToDigit(const MyString& str)
-{
-	size_t i = 0;
-	unsigned digit = 0;
-
-	while (str[i] != '\0')
-	{
-		digit *= 10;
-		digit += (str[i] - 48);
-		i++;
-	}
-
-	return digit;
-}
-
 void printCommands()
 {
-	std::cout << "Commands:" << std::endl << "signin - create a profile" << std::endl
+	std::cout << "Commands:" << std::endl << "signin - creates a profile" << std::endl
 		<< "login - enter the system with your name and password" << std::endl
-		<< "logout" << std::endl
+		<< "logout - end access to the system" << std::endl
 		<< "create - creates a topic" << std::endl
 		<< "search <text> - shows all topics that include this text" << std::endl
 		<< "open <title> - opens a topic with this title" << std::endl
 		<< "open <id> - opens a topic with this id" << std::endl
-		<< "post - creates a post for open topic" << std::endl
+		<< "post - creates a post for an open topic" << std::endl
 		<< "p_open <title> - opens a post with this title" << std::endl
 		<< "p_open <id> - opens a post with this id" << std::endl
 		<< "list - display all the posts for the current topic" << std::endl
 		<< "comment - adds a comment to an open post" << std::endl
 		<< "comments - displays all the comments for an open post" << std::endl
-		<< "reply <id> - replies to a comment for an open post" << std::endl
+		<< "reply <id> - replies to a comment to an open post" << std::endl
 		<< "upvote <id> - like comment" << std::endl
 		<< "downvote <id> - dislike comment" << std::endl
 		<< "p_close - closes current post" << std::endl
 		<< "quit - closes current topic" << std::endl
 		<< "exit - closes the system" << std::endl
-		<< "whoami - dislays information about the user" << std::endl
+		<< "whoami - displays information about the user" << std::endl
 		<< "about <id> - displays information about topic with this id" << std::endl;
 }
 
@@ -223,7 +195,7 @@ void run()
 {
 	System s;
 
-	std::cout << "Welcome to sisinger!" << "In order to start the program please choose a valid command!" << std::endl;
+	std::cout << "Welcome to Sisinger!" << "In order to start the program please choose a valid command!" << std::endl;
 
 	printCommands();
 
@@ -247,16 +219,12 @@ void run()
 		else if (strcmp(firstArg, "search") == 0)
 		{
 			std::cin.ignore();
-			//std::cin.getline(secondArg, 1024, '\n');
-
 			std::cin >> secondArg;
-
 			searchTopic(secondArg, s);
 		}
 		else if (strcmp(firstArg, "open") == 0)
 		{
 			std::cin.ignore();
-			//std::cin.getline(secondArg, 1024, '\n');
 			std::cin >> secondArg;
 
 			if (isDigit(secondArg))
@@ -274,8 +242,6 @@ void run()
 		else if (strcmp(firstArg, "p_open") == 0)
 		{
 			std::cin.ignore();
-			//std::cin.getline(secondArg, 1024, '\n');
-
 			std::cin >> secondArg;
 
 			if (isDigit(secondArg))
