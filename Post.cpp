@@ -149,13 +149,13 @@ void Post::downvote(unsigned commentId, bool isRated)
 
 std::ostream& operator<<(std::ostream& os, const Post& p)
 {
-	os << p._title << '\n'
-		<< p._description << '\n'
-		<< p._postId << '\n';
+	os << p._title << std::endl
+		<< p._description << std::endl
+		<< p._postId << std::endl;
 
 	size_t commentsSize = p._comments.getSize();
 
-	os << commentsSize << '\n';
+	os << commentsSize << std::endl;
 
 	for (size_t i = 0; i < commentsSize; i++)
 		os << p._comments[i];

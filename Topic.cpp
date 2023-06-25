@@ -92,14 +92,14 @@ Post* Topic::p_open(unsigned postId)
 
 std::ostream& operator<<(std::ostream& os, const Topic& t)
 {
-	os << t._creatorName << '\n'
-		<< t._description << '\n'
-		<< t._title << '\n'
-		<< t._topicId << '\n';
+	os << t._creatorName << std::endl
+		<< t._description << std::endl
+		<< t._title << std::endl
+		<< t._topicId << std::endl;
 
 	size_t postsSize = t._posts.getSize();
 
-	os << postsSize << '\n';
+	os << postsSize << std::endl;
 
 	for (size_t i = 0; i < postsSize; i++)
 		os << t._posts[i];

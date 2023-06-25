@@ -74,20 +74,20 @@ bool User::addRating(unsigned commentId)
 
 std::ostream& operator<<(std::ostream& os, const User& u)
 {
-	os << u._firstName << '\n'
-		<< u._lastName << '\n'
-		<< u._password << '\n'
-		<< u._userId << '\n'
-		<< u._points << '\n';
+	os << u._firstName << std::endl
+		<< u._lastName << std::endl
+		<< u._password << std::endl
+		<< u._userId << std::endl
+		<< u._points << std::endl;
 
 	size_t size = u._commentRatings.getSize();
 
-	os << size << '\n';
+	os << size << std::endl;
 
 	for (size_t i = 0; i < size; i++)
 	{
-		os << u._commentRatings[i].getFirst() << '\n';
-		os << u._commentRatings[i].getSecond() << '\n';
+		os << u._commentRatings[i].getFirst() << std::endl;
+		os << u._commentRatings[i].getSecond() << std::endl;
 	}
 
 	return os;

@@ -48,17 +48,17 @@ void Comment::rate(int rating)
 
 std::ostream& operator<<(std::ostream& os, const Comment& c)
 {
-	os << c._userName << '\n'
-		<< c._text << '\n'
-		<< c._commentId << '\n'
-		<< c._rating << '\n';
+	os << c._userName << std::endl
+		<< c._text << std::endl
+		<< c._commentId << std::endl
+		<< c._rating << std::endl;
 
 	size_t repliesSize = c._replies.getSize();
 
-	os << repliesSize << '\n';
+	os << repliesSize << std::endl;
 
 	for (size_t i = 0; i < repliesSize; i++)
-		os << c._replies[i] << '\n';
+		os << c._replies[i] << std::endl;
 
 	return os;
 }
